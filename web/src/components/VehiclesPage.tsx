@@ -21,7 +21,6 @@ export function VehiclesPage() {
 
   useEffect(() => {
     let cancelled = false
-    setLoading(true)
     api.getVehicles(sortBy, sortDir)
       .then((data) => {
         if (!cancelled) {
@@ -41,6 +40,7 @@ export function VehiclesPage() {
   }, [sortBy, sortDir, reloadKey])
 
   function handleSort(field: VehicleSortField) {
+    setLoading(true)
     if (field === sortBy) {
       setSortDir((current) => (current === 'asc' ? 'desc' : 'asc'))
     } else {
@@ -49,9 +49,14 @@ export function VehiclesPage() {
     }
   }
 
+  function handleAdded() {
+    setLoading(true)
+    setReloadKey((k) => k + 1)
+  }
+
   return (
     <>
-      <AddVehicleForm manufacturers={manufacturers} onAdded={() => setReloadKey((k) => k + 1)} />
+      <AddVehicleForm manufacturers={manufacturers} onAdded={handleAdded} />
 
       <section className="card">
         <h2>Vehicles</h2>
