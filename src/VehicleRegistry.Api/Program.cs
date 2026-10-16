@@ -12,6 +12,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddProblemDetails();
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddScoped<VehicleService>();
+builder.Services.AddScoped<CategoryService>();
 
 var app = builder.Build();
 

@@ -74,4 +74,17 @@ public class CategoryRulesTests
         // Assert
         Assert.Contains(errors, e => e.Contains("icon"));
     }
+    [Fact]
+    public void Validate_UnknownIcon_ReturnsError()
+    {
+        // Arrange: Medium uses an icon the frontend can't draw
+        var categories = DefaultCategories();
+        categories.Single(c => c.Name == "Medium").IconKey = "rocket";
+
+        // Act
+        var errors = CategoryRules.Validate(categories);
+
+        // Assert
+        Assert.Contains(errors, e => e.Contains("unknown icon"));
+    }
 }

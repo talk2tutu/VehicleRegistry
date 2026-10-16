@@ -22,3 +22,11 @@ public record VehicleResponse(
 public enum VehicleSortField { Owner, Manufacturer, Year, Weight }
 
 public enum SortDirection { Asc, Desc }
+public record CategoryRequest(string? Name, decimal MinWeightKg, string? IconKey);
+
+public record CategoryResponse(
+    int Id,
+    string Name,
+    decimal MinWeightKg,
+    decimal? MaxWeightKg,   // exclusive; null = no upper limit
+    string IconKey);

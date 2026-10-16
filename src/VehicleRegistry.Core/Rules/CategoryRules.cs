@@ -5,6 +5,7 @@ namespace VehicleRegistry.Core.Rules;
 public static class CategoryRules
 {
     public const int MaxDecimalPlaces = 2;
+    public const int MaxNameLength = 50;
 
     public static IReadOnlyList<string> Validate(IReadOnlyCollection<WeightCategory> categories)
     {
@@ -20,8 +21,14 @@ public static class CategoryRules
         {
             if (string.IsNullOrWhiteSpace(c.Name))
                 errors.Add("Category name is required.");
+            else if (c.Name.Trim().Length > MaxNameLength)
+                errors.Add($"Category name '{c.Name}' must be {MaxNameLength} characters or fewer.");
+
             if (string.IsNullOrWhiteSpace(c.IconKey))
                 errors.Add($"Category '{c.Name}' must have an icon.");
+            else if (!CategoryIcons.IsValid(c.IconKey))
+                errors.Add($"Category '{c.Name}' has an unknown icon '{c.IconKey}'.");
+
             if (c.MinWeightKg < 0)
                 errors.Add($"Category '{c.Name}' cannot start below 0 kg.");
             if (decimal.Round(c.MinWeightKg, MaxDecimalPlaces) != c.MinWeightKg)
