@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { VehiclesPage } from './components/VehiclesPage'
+import { CategoriesPage } from './components/CategoriesPage'
 
 type Tab = 'vehicles' | 'categories'
 
@@ -34,7 +35,7 @@ export default function App() {
         {tab === 'vehicles' ? (
           <VehiclesPage />
         ) : (
-          <p className="card empty">Category administration is coming in Phase 6.</p>
+          <CategoriesPage />
         )}
       </main>
     </div>
