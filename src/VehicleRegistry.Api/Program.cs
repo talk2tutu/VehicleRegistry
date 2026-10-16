@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VehicleRegistry.Api.Data;
+using VehicleRegistry.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddProblemDetails();
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddScoped<VehicleService>();
 
 var app = builder.Build();
+
+app.UseExceptionHandler();
+app.UseStatusCodePages();
 
 if (app.Environment.IsDevelopment())
 {
